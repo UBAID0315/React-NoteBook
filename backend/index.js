@@ -2,6 +2,7 @@ const connecttoMongo = require('./db')
 const express = require('express')
 
 
+connecttoMongo();
 const app = express()
 const port = 3000
 
@@ -16,6 +17,3 @@ app.use('/api/notes',require('./routes/notes'))
 app.listen(port,()=>{
     console.log(`port is http://localhost:${port}`)
 })
-
-
-connecttoMongo();
