@@ -4,7 +4,7 @@ const express = require('express')
 
 connecttoMongo();
 const app = express()
-const port = 3000
+const port = 5000
 
 // Available Routes path=>(path,callback function)
 app.get('/',(req,res)=>{
