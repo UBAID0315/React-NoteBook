@@ -95,3 +95,18 @@ router.get('/login', [
         res.status(500).send("Some error has been occured!");
     }
 })
+
+
+// Router 3: (to check the details of the login user)
+router.get('/getuser', fetchuser, async (req, res) => {
+    try {
+        userId = req.user.id
+        const user = await User.findById(userId).select('-password')
+        res.send(user)
+    } catch (error) {
+        console.error(error.message)
+        res.status(500).send("Some error has been occured!");
+    }
+})
+
+module.exports = router
