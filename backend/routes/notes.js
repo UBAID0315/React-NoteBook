@@ -30,25 +30,50 @@ router.post('/addnote', fetchuser, [
     }
 })
 
-// Route 2: Add or delete notes of user
+// Route 2: Update or delete notes of user (updation)
 router.put('/updatenote/:id', fetchuser, async (req, res) => {
-    const {title, description, tags} = req.body
+    try {
+        const { title, description, tags } = req.body
 
-    // Create a newNote object
-    const newNote = {}
-    if(title){newNote.title = title}
-    if(description){newNote.description = description}
-    if(tags){newNote.tags = tags}
+        // Create a newNote object
+        const newNote = {}
+        if (title) { newNote.title = title }
+        if (description) { newNote.description = description }
+        if (tags) { newNote.tags = tags }
 
-    let note = await Notes.findById(req.params.id)
-    if(!note){res.status(404).send("Not Found")}
-                                                                                                                                                
-    if(note.user.toString() !== req.user.id){               // for ensuring that the login user 
-        return res.status(401).send("Not Allowed")          // can not change notes of any other user
+        let note = await Notes.findById(req.params.id)
+        if (!note) { res.status(404).send("Not Found") }
+
+        if (note.user.toString() !== req.user.id) {               // for ensuring that the login user 
+            return res.status(401).send("Not Allowed")          // can not change notes of any other user
+        }
+
+        note = await Notes.findByIdAndUpdate(req.params.id, { $set: newNote }, { new: true })
+        res.json({ note });
+    } catch (error) {
+        console.error(error.message)
+        res.status(500).send("Some error has been occured!");
     }
+})
 
-    note = await Notes.findByIdAndUpdate(req.params.id, {$set: newNote},{new:true})
-    res.json({note});
+// (deletion)
+router.delete('/deletenote/:id', fetchuser, async (req, res) => {
+    try {
+
+        let note = await Notes.findById(req.params.id)
+        if (!note) { res.status(404).send("Not Found") }
+
+        if (note.user.toString() !== req.user.id) {               // for ensuring that the login user 
+            return res.status(401).send("Not Allowed")          // can not delete notes of any other user
+        }
+
+        note = await Notes.findByIdAndDelete(req.params.id)
+        res.json({ note });
+    }
+    catch (error) {
+        console.error(error.message)
+        res.status(500).send("Some error has been occured!");
+    }
 })
 
 // Route 3: Fetch all the notes of a specific user
