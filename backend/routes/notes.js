@@ -31,6 +31,25 @@ router.post('/addnote', fetchuser, [
 })
 
 // Route 2: Add or delete notes of user
+router.put('/updatenote/:id', fetchuser, async (req, res) => {
+    const {title, description, tags} = req.body
+
+    // Create a newNote object
+    const newNote = {}
+    if(title){newNote.title = title}
+    if(description){newNote.description = description}
+    if(tags){newNote.tags = tags}
+
+    let note = await Notes.findById(req.params.id)
+    if(!note){res.status(404).send("Not Found")}
+                                                                                                                                                
+    if(note.user.toString() !== req.user.id){               // for ensuring that the login user 
+        return res.status(401).send("Not Allowed")          // can not change notes of any other user
+    }
+
+    note = await Notes.findByIdAndUpdate(req.params.id, {$set: newNote},{new:true})
+    res.json({note});
+})
 
 // Route 3: Fetch all the notes of a specific user
 router.get('/fetchnotes', fetchuser, async (req, res) => {
