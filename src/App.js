@@ -1,23 +1,29 @@
-import logo from './logo.svg';
+import { useState } from 'react';
 import './App.css';
+import { Navbar } from './Components/Navbar';
+import { BrowserRouter as Router, Routes, Route, useActionData } from "react-router-dom";
 
 function App() {
+  const [mode, setMode] = useState('true') 
+
+  const DarkMode = () => {
+    console.log(mode)
+    if (mode === true) {
+      document.body.style.backgroundColor = "black";
+      setMode(false);
+    } else {
+      document.body.style.backgroundColor = "white";
+      setMode(true);
+    }
+  };
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      <Router>
+        <Navbar title={"INoteBook"} DarkMode={DarkMode} mode={mode}/>
+        <Routes>
+          <Route path="/" element={""}></Route>
+        </Routes>
+      </Router>
     </div>
   );
 }

@@ -1,38 +1,120 @@
-.App {
-  text-align: center;
-}
 
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
-}
+/* Body */
 
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
+body{
+   background-color: black;
+}
+@keyframes responsiveAnim {
+  0% {
+    transform: scale(1);
+  }
+  100% {
+    transform: scale(1.1);
   }
 }
 
-.App-header {
-  background-color: #282c34;
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  font-size: calc(10px + 2vmin);
+@media (max-width: 768px) { 
+  * {
+    transition: all 0.3s ease-in-out; 
+  }
+}
+
+
+/* Navbar */
+
+.container{
+  max-width: 90%;
+}
+
+.title {
+  font-family: "Josefin Sans", sans-serif;
+  font-optical-sizing: auto;
+  font-size: 25px;
+  font-weight: 530;
+  letter-spacing: 1px;
+  font-style: normal;
+  margin-top: 5px;
+}
+
+.navbar .container-fluid {
+  display: block;
+}
+
+.image {
+  width: 70px;
+  z-index: 1;
+  height: auto;
+  border-radius: 50%;
+  margin-right: 20px;
+}
+
+.switch {
+  position: relative;
+  display: inline-block;
+  width: 70px;
+  height: 34px;
+}
+
+.switch input { 
+  opacity: 0;
+  width: 0;
+  height: 0;
+}
+
+.slider {
+  position: absolute;
+  cursor: pointer;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: lightgray;
+  -webkit-transition:.4s;
+  transition:.4s;
+}
+
+.slider:before {
+  position: absolute;
+  font-family: 'Font Awesome 5 Free';
+  font-weight: 900;
+  font-size: 20px;
+  width: 26px;
+  height: 26px;
+  left: 4px;
+  bottom: 4px;
+  -webkit-transition:.4s;
+  transition:.4s;
+}
+
+input:not(:checked) +.slider:before {
+  content: '\f186'; /* moon icon */
+  margin-left: 5px;
+  margin-bottom: 2px;
+}
+
+input:checked +.slider:before {
+  content: '\f185'; /* sun icon */
+  -webkit-transform: translateX(26px);
+  -ms-transform: translateX(26px);
+  transform: translateX(26px);
   color: white;
+  margin-left: 7px;
 }
 
-.App-link {
-  color: #61dafb;
+input:checked +.slider {
+  background-color: #000000;
+  border: 1px solid white;
 }
 
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
+input:focus +.slider {
+  box-shadow: 0 0 1px #2196F3;
+}
+
+/* Rounded sliders */
+.slider.round {
+  border-radius: 34px;
+}
+
+.slider.round:before {
+  border-radius: 50%;
 }
