@@ -1,10 +1,11 @@
 import { useState } from 'react';
 import './App.css';
 import { Navbar } from './Components/Navbar';
-import { BrowserRouter as Router, Routes, Route, useActionData } from "react-router-dom";
+import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import NoteState from './Contexts/NoteState';
 
 function App() {
-  const [mode, setMode] = useState('true') 
+  const [mode, setMode] = useState('true')
 
   const DarkMode = () => {
     console.log(mode)
@@ -18,12 +19,14 @@ function App() {
   };
   return (
     <div className="App">
-      <Router>
-        <Navbar title={"INoteBook"} DarkMode={DarkMode} mode={mode}/>
-        <Routes>
-          <Route path="/" element={""}></Route>
-        </Routes>
-      </Router>
+      <NoteState>
+        <Router>
+          <Navbar title={"INoteBook"} DarkMode={DarkMode} mode={mode} />
+          <Routes>
+            <Route path="/" element={""}></Route>
+          </Routes>
+        </Router>
+      </NoteState>
     </div>
   );
 }
