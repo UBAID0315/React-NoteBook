@@ -1,9 +1,10 @@
-import React from 'react'
+import React, { useContext } from 'react'
 import { Link } from 'react-router-dom'
 import { Spinner } from './Spinner';
+import NoteContext from '../Contexts/Notes/NoteContext';
 
-export const SignUp = (props) => {
-  let { mode, loading, LoadingSpinner } = props;
+export const SignUp = () => {
+  const {mode,loading,LoadingSpinner} = useContext(NoteContext)
   
   return (
     <>

@@ -1,9 +1,10 @@
-import React, { useState } from 'react'
+import React, { useContext } from 'react'
 import { Link } from 'react-router-dom'
+import NoteContext from '../Contexts/Notes/NoteContext'
 
 export const Navbar = (props) => {
-    let { title, mode, DarkMode, LoadingSpinner } = props
-
+    const { title } = props
+    const {mode,DarkMode,LoadingSpinner} = useContext(NoteContext)
     return (
         <div className="container mt-2">
             <div className="d-flex justify-content-between align-items-center">
