@@ -14,8 +14,8 @@ export const Alert = (props) => {
             </svg>}
 
 
-            <div class={`alert alert-${style} d-flex align-items-center" role="alert`}>
-                <svg class="bi flex-shrink-0 me-2" width="24" height="24" role="img" aria-label="Danger:">
+            <div className={`alert alert-${style} d-flex align-items-center" role="alert`}>
+                <svg className="bi flex-shrink-0 me-2" width="24" height="24" role="img" aria-label="Danger:">
                     <use xlinkHref={`${style === 'success' ? '#check-circle-fill' : '#exclamation-triangle-fill'}`} />
                 </svg>
                 <div>
