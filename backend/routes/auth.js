@@ -15,6 +15,7 @@ router.post('/createuser', [
     body('password', 'Password must be atleast 5 characters').isLength({ min: 5 }),
 
 ], async (req, res) => {
+    let signup = false;
     const errors = validationResult(req)
     if (!errors.isEmpty()) {
         return res.status(400).json({ errors: errors.array() });
@@ -46,7 +47,8 @@ router.post('/createuser', [
             }
         }
         const token = jwt.sign(data, JWT_SECRET)
-        res.json({ token })
+        signup = true
+        res.json({ signup,token })
     }
     catch (error) {
         console.error(error.message)
@@ -64,6 +66,7 @@ router.post('/login', [
     body('password', 'Password must be atleast 5 characters').exists(),
 
 ], async (req, res) => {
+    let login = false;
     const errors = validationResult(req)
     if (!errors.isEmpty()) {
         return res.status(400).json({ errors: errors.array() });
@@ -74,6 +77,7 @@ router.post('/login', [
         let user = await User.findOne({ email });
 
         if (!user) {
+            login=false
             return res.status(400).json({ error: "Please enter the correct credentials" })
         }
 
@@ -89,7 +93,8 @@ router.post('/login', [
             }
         }
         const token = jwt.sign(data, JWT_SECRET)
-        res.json({ token })
+        login=true
+        res.json({login,token })
     } catch (error) {
         console.error(error.message)
         res.status(500).send("Some error has been occured!");
@@ -99,6 +104,18 @@ router.post('/login', [
 
 // Router 3: (to check the details of the login user)
 router.get('/getuser', fetchuser, async (req, res) => {
+    try {
+        userId = req.user.id
+        const user = await User.findById(userId).select('-password')
+        res.send(user)
+    } catch (error) {
+        console.error(error.message)
+        res.status(500).send("Some error has been occured!");
+    }
+})
+
+// Router 4 (is to delete the user)
+router.get('/deleteuser', fetchuser, async (req, res) => {
     try {
         userId = req.user.id
         const user = await User.findById(userId).select('-password')

@@ -119,6 +119,10 @@ input:focus +.slider {
 .slider.round:before {
   border-radius: 50%;
 }
+
+.logout-button{
+  border: none;
+}
 /* Navbar End */
 
 /* <Body part> */
